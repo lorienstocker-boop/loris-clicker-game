@@ -23,6 +23,7 @@
       font-size: 18px;
       padding: 10px 20px;
       cursor: pointer;
+      margin: 10px 5px 0 5px;
     }
   </style>
 </head>
@@ -31,16 +32,16 @@
   <div class="container">
     <h1>Score: <span id="score">0</span></h1>
     <button onclick="increaseScore()">click me!</button>
+    <br>
+    <button id="upgradeBtn" onclick="extraScore()">
+      +1 point-per-click (Cost: 5)
+    </button>
   </div>
-
-  <button onclick="extraScore()">
-  +1 point-per-click (Cost: 5)
-</button>
 
 <script>
   let score = 0;
   let pointsPerClick = 1;
-  const upgradeCost = 5;
+  let upgradeCost = 5;
 
   function increaseScore() {
     score += pointsPerClick;
@@ -51,8 +52,9 @@
     if (score >= upgradeCost) {
       score -= upgradeCost;
       pointsPerClick++;
+      upgradeCost = Math.round(upgradeCost * 1.5);
       document.getElementById('score').textContent = score;
-      alert('Upgrade bought! You get +1 more point per click.');
+      document.getElementById('upgradeBtn').textContent = `+1 point-per-click (Cost: ${upgradeCost})`;
     } else {
       alert('Not enough points to buy the upgrade.');
     }
