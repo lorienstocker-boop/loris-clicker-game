@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Loris fun clicker game!</title>
+  <title>loris fun clicker game!</title>
+
   <style>
     body, html {
       height: 100%;
@@ -12,6 +13,7 @@
       font-family: Arial, sans-serif;
       background: #f0f0f0;
     }
+
     .container {
       text-align: center;
       background: white;
@@ -19,6 +21,7 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
     button {
       font-size: 18px;
       padding: 10px 20px;
@@ -27,39 +30,92 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="container">
-    <h1>Score: <span id="score">0</span></h1>
-    <button onclick="increaseScore()">click me!</button>
-    <br>
-    <button id="upgradeBtn" onclick="extraScore()">
-      +1 point-per-click (Cost: 5)
+
+    <h1>score: <span id="score">0</span></h1>
+
+    <button onclick="increaseScore()">
+      click me!
     </button>
+
+    <br>
+
+    <button id="upgradeBtn" onclick="extraScore()">
+      +1 point-per-click (cost: 5)
+    </button>
+
+    <button id="upgradeBtn2" onclick="extraScoreX2()">
+      +50 point-per-click (cost: 100)
+    </button>
+
   </div>
 
-<script>
-  let score = 0;
-  let pointsPerClick = 1;
-  let upgradeCost = 5;
+  <script>
+    let score = 0;
+    let pointsPerClick = 1;
 
-  function increaseScore() {
-    score += pointsPerClick;
-    document.getElementById('score').textContent = score;
-  }
+    let upgradeCost = 5;
+    let upgradeCost2 = 100;
 
-  function extraScore() {
-    if (score >= upgradeCost) {
-      score -= upgradeCost;
-      pointsPerClick++;
-      upgradeCost = Math.round(upgradeCost * 1.5);
+
+    function increaseScore() {
+      score += pointsPerClick;
+
       document.getElementById('score').textContent = score;
-      document.getElementById('upgradeBtn').textContent = `+1 point-per-click (Cost: ${upgradeCost})`;
-    } else {
-      alert('Not enough points to buy the upgrade.');
     }
-  }
-</script>
+
+
+
+    function extraScore() {
+
+      if (score >= upgradeCost) {
+
+        score -= upgradeCost;
+
+        pointsPerClick += 1;
+
+        upgradeCost = Math.round(upgradeCost * 1.5);
+
+        document.getElementById('score').textContent = score;
+
+        document.getElementById('upgradeBtn').textContent =
+          `+1 point-per-click (cost: ${upgradeCost})`;
+
+      } else {
+
+        alert('not enough points to buy the upgrade. :(');
+
+      }
+    }
+
+
+
+    function extraScoreX2() {
+
+      if (score >= upgradeCost2) {
+
+        score -= upgradeCost2;
+
+        pointsPerClick += 50;
+
+        upgradeCost2 = Math.round(upgradeCost2 * 1.5);
+
+        document.getElementById('score').textContent = score;
+
+        document.getElementById('upgradeBtn2').textContent =
+          `+50 point-per-click (cost: ${upgradeCost2})`;
+
+      } else {
+
+        alert('Not enough points to buy the upgrade. :(');
+
+      }
+    }
+
+  </script>
 
 </body>
 </html>
