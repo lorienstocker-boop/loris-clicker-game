@@ -330,32 +330,26 @@
 
     function extraScoreX5() {
 
-      if (score >= upgradeCost3) {
+  if (score >= upgradeCost3) {
 
-        score -= upgradeCost3;
+    score -= upgradeCost3;
 
-        
-        pointsPerClick += 6500;
+    pointsPerClick += 6500;
 
-        upgradeCost3 =
-          Math.round(upgradeCost3 * 10);
+    upgradeCost3 = Math.round(upgradeCost3 * 10);
 
-        updateScore();
+    updateScore();
 
-        
+    document.getElementById("upgradeBtn3").textContent =
+      `BIG upgrade! (+6500 per click) (cost: ${upgradeCost3})`;
 
-        document.getElementById("upgradeBtn3").textContent =
-          `BIG upgrade! (+6500 per click) (cost: ${upgradeCost3})`;
+  } else {
 
-      } else {
+    alert("not enough points to buy the upgrade. :(");
 
-        alert(
-          "not enough points to buy the upgrade. :("
-        );
+  }
 
-      }
-
-    }
+}
 
 
 
