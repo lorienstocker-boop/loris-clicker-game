@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Clicker</title>
+</head>
+<body>
+
+  <h1>Score: <span id="score">0</span></h1>
+  <button onclick="increaseScore()">Click me!</button>
+
+  <script>
+    let score = 0;
+    function increaseScore() {
+      score++;
+      document.getElementById('score').textContent = score;
+    }
+  </script>
+
+</body>
+</html>
