@@ -156,6 +156,23 @@
       +50 point-per-click (cost: 100)
     </button>
 
+    <br>
+
+    <button id="moneyPrinterBtn" onclick="startMoneyPrinter()">
+      start GOOBY printer for 60 seconds
+    </button>
+
+    <div id="moneyPrinterDisplay" style="display: none; margin-top: 20px;">
+  <img
+    src="money-printer.png"
+    alt="Money printer"
+    style="width: 250px; max-width: 100%; border-radius: 10px;"
+  >
+
+  <h2 id="moneyPrinterTimer">60 seconds left!</h2>
+  <p>💰 +10,000 coins every second!</p>
+</div>
+
     <button id="upgradeBtn3" onclick="extraScoreX5()">
       BIG upgrade: +6500 points per click (cost: 50000)
     </button>
@@ -171,6 +188,59 @@
     let upgradeCost = 5;
     let upgradeCost2 = 100;
     let upgradeCost3 = 50000;
+
+
+let moneyPrinterActive = false;
+let moneyPrinterInterval = null;
+let moneyPrinterCountdown = null;
+
+function startMoneyPrinter() {
+  if (moneyPrinterActive) return;
+
+  moneyPrinterActive = true;
+
+  const button = document.getElementById('moneyPrinterBtn');
+  const display = document.getElementById('moneyPrinterDisplay');
+  const timer = document.getElementById('moneyPrinterTimer');
+
+  button.disabled = true;
+  button.textContent = '💸 GOOBY PRINTER RUNNING!';
+  display.style.display = 'block';
+
+  let secondsLeft = 60;
+
+  timer.textContent = secondsLeft + ' seconds left!';
+
+
+  moneyPrinterInterval = setInterval(() => {
+    score += 10000;
+
+    document.getElementById('score').textContent = score;
+  }, 1000);
+
+
+  moneyPrinterCountdown = setInterval(() => {
+    secondsLeft--;
+
+    timer.textContent = secondsLeft + ' seconds left!';
+
+    if (secondsLeft <= 0) {
+      clearInterval(moneyPrinterInterval);
+      clearInterval(moneyPrinterCountdown);
+
+      moneyPrinterInterval = null;
+      moneyPrinterCountdown = null;
+      moneyPrinterActive = false;
+
+      display.style.display = 'none';
+
+      button.disabled = false;
+      button.textContent = 'start GOOBY printer for 60 seconds';
+    }
+  }, 1000);
+}
+
+
 
 
     function increaseScore() {
