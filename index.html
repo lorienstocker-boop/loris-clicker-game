@@ -1,68 +1,51 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>loris fun clicker game!</title>
 
   <style>
-    html, body {
-      width: 100%;
+    body, html {
       height: 100%;
       margin: 0;
-
       display: flex;
       justify-content: center;
       align-items: center;
-
       font-family: Arial, sans-serif;
       background: #f0f0f0;
-
       overflow: hidden;
     }
 
     .container {
       position: relative;
-
       text-align: center;
-
       background: white;
       padding: 30px 50px;
-
       border-radius: 10px;
-
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-
       z-index: 10;
     }
 
     button {
       font-size: 18px;
-
       padding: 10px 20px;
-
       cursor: pointer;
-
       margin: 10px 5px 0 5px;
     }
 
-    /*
-      COINS
-    */
 
     .coin {
       position: fixed;
-
       width: 24px;
       height: 24px;
-
       border-radius: 50%;
 
-      background:
-        linear-gradient(
-          145deg,
-          #fff36a,
-          #ffd21c 45%,
-          #d99b00
-        );
+      background: linear-gradient(
+        145deg,
+        #fff36a,
+        #ffd21c 45%,
+        #d99b00
+      );
 
       border: 2px solid #b77b00;
 
@@ -72,43 +55,28 @@
 
       pointer-events: none;
 
-      z-index: 1000;
-
-      /*
-        This makes the coin rotate in 3D.
-      */
       transform-style: preserve-3d;
 
-      /*
-        Prevents the coin from appearing as
-        a weird inline element.
-      */
-      display: block;
+      z-index: 1000;
     }
+
 
     .coin::after {
       content: "$";
-
       position: absolute;
 
       left: 50%;
       top: 50%;
 
-      transform:
-        translate(-50%, -50%);
+      transform: translate(-50%, -50%);
 
       font-size: 14px;
-
       font-weight: bold;
-
       color: #9a6800;
 
       text-shadow:
         1px 1px rgba(255,255,255,0.4);
-
-      pointer-events: none;
     }
-
 
 
     @keyframes coinFly {
@@ -125,45 +93,24 @@
       }
 
       45% {
-        transform:
-          translate3d(
-            calc(var(--x) * 0.35),
-            var(--midY),
-            0
-          )
-          rotateX(var(--rx))
-          rotateY(var(--ry))
-          rotateZ(var(--rz))
-          scale(1.15);
-
         opacity: 1;
       }
 
       75% {
         transform:
-          translate3d(
-            calc(var(--x) * 0.75),
-            var(--floorY),
-            0
-          )
-          rotateX(var(--rx2))
-          rotateY(var(--ry2))
-          rotateZ(var(--rz2))
-          scale(0.95);
-
-        opacity: 1;
+          translate3d(var(--x), var(--midY), 0)
+          rotateX(var(--rx))
+          rotateY(var(--ry))
+          rotateZ(var(--rz))
+          scale(1);
       }
 
       90% {
         transform:
-          translate3d(
-            var(--x),
-            calc(var(--floorY) - 10px),
-            0
-          )
-          rotateX(var(--rx3))
-          rotateY(var(--ry3))
-          rotateZ(var(--rz3))
+          translate3d(var(--x), var(--floorY), 0)
+          rotateX(var(--rx2))
+          rotateY(var(--ry2))
+          rotateZ(var(--rz2))
           scale(0.9);
 
         opacity: 1;
@@ -171,11 +118,7 @@
 
       100% {
         transform:
-          translate3d(
-            var(--x),
-            var(--floorY),
-            0
-          )
+          translate3d(var(--x), var(--floorY), 0)
           rotateX(var(--rx3))
           rotateY(var(--ry3))
           rotateZ(var(--rz3))
@@ -186,10 +129,8 @@
     }
 
     .coin.fly {
-      animation:
-        coinFly 900ms cubic-bezier(.2,.7,.3,1) forwards;
+      animation: coinFly 900ms cubic-bezier(.2,.7,.3,1) forwards;
     }
-
   </style>
 </head>
 
@@ -198,35 +139,25 @@
   <div class="container">
 
     <h1>
-      score:
-      <span id="score">0</span>
+      Score: <span id="score">0</span>
     </h1>
 
-    <button
-      id="clickButton"
-      onclick="increaseScore()">
+    <button id="clickButton" onclick="increaseScore()">
       click me!
     </button>
 
     <br>
 
-    <button
-      id="upgradeBtn"
-      onclick="extraScore()">
+    <button id="upgradeBtn" onclick="extraScore()">
       +1 point-per-click (cost: 5)
     </button>
 
-    <button
-      id="upgradeBtn2"
-      onclick="extraScoreX2()">
+    <button id="upgradeBtn2" onclick="extraScoreX2()">
       +50 point-per-click (cost: 100)
     </button>
 
-    <button
-      id="upgradeBtn3"
-      onclick="extraScoreX5()">
-      at this point you're about to see some BIG numbers!
-      (cost: 50000)
+    <button id="upgradeBtn3" onclick="extraScoreX5()">
+      BIG upgrade: +6500 points per click (cost: 50000)
     </button>
 
   </div>
@@ -234,42 +165,24 @@
 
   <script>
 
-    /*
-      GAME VARIABLES
-    */
-
     let score = 0;
-
     let pointsPerClick = 1;
 
     let upgradeCost = 5;
     let upgradeCost2 = 100;
-    let upgradeCost3 = 50000;
-
-
-
-
-    function updateScore() {
-
-      document.getElementById("score").textContent = score;
-
-    }
-
-
 
 
     function increaseScore() {
 
       score += pointsPerClick;
 
-      updateScore();
+      document.getElementById('score').textContent = score;
+
 
       createCoins();
 
     }
 
-
-    
 
     function extraScore() {
 
@@ -279,24 +192,20 @@
 
         pointsPerClick += 1;
 
-        upgradeCost =
-          Math.round(upgradeCost * 1.5);
+        upgradeCost = Math.round(upgradeCost * 1.5);
 
-        updateScore();
+        document.getElementById('score').textContent = score;
 
-        document.getElementById("upgradeBtn").textContent =
+        document.getElementById('upgradeBtn').textContent =
           `+1 point-per-click (cost: ${upgradeCost})`;
 
       } else {
 
-        alert(
-          "not enough points to buy the upgrade. :("
-        );
+        alert('not enough points to buy the upgrade. :(');
 
       }
 
     }
-
 
 
     function extraScoreX2() {
@@ -307,48 +216,37 @@
 
         pointsPerClick += 50;
 
-        upgradeCost2 =
-          Math.round(upgradeCost2 * 1.5);
+        upgradeCost2 = Math.round(upgradeCost2 * 1.5);
 
-        updateScore();
+        document.getElementById('score').textContent = score;
 
-        document.getElementById("upgradeBtn2").textContent =
+        document.getElementById('upgradeBtn2').textContent =
           `+50 point-per-click (cost: ${upgradeCost2})`;
 
       } else {
 
-        alert(
-          "not enough points to buy the upgrade. :("
-        );
+        alert('not enough points to buy the upgrade. :(');
 
       }
 
     }
 
 
-
-
     function extraScoreX5() {
-
   if (score >= upgradeCost3) {
-
     score -= upgradeCost3;
 
     pointsPerClick += 6500;
 
     upgradeCost3 = Math.round(upgradeCost3 * 10);
 
-    updateScore();
+    document.getElementById('score').textContent = score;
 
-    document.getElementById("upgradeBtn3").textContent =
-      `BIG upgrade! (+6500 per click) (cost: ${upgradeCost3})`;
-
+    document.getElementById('upgradeBtn3').textContent =
+      `BIG upgrade: +6500 points per click (cost: ${upgradeCost3})`;
   } else {
-
-    alert("not enough points to buy the upgrade. :(");
-
+    alert('not enough points to buy the upgrade! :(');
   }
-
 }
 
 
@@ -356,170 +254,123 @@
     function createCoins() {
 
       const button =
-        document.getElementById("clickButton");
+        document.getElementById('clickButton');
 
       const rect =
         button.getBoundingClientRect();
 
 
-
       for (let i = 0; i < 5; i++) {
 
         const coin =
-          document.createElement("div");
+          document.createElement('div');
 
-        coin.className = "coin";
+        coin.className = 'coin';
 
 
 
         const startX =
           rect.left +
           rect.width / 2 -
-          14;
+          12;
 
         const startY =
           rect.top +
           rect.height / 2 -
-          14;
+          12;
 
 
-        coin.style.left =
-          startX + "px";
-
-        coin.style.top =
-          startY + "px";
-
+        coin.style.left = startX + 'px';
+        coin.style.top = startY + 'px';
 
 
         const x =
-          (Math.random() * 180 - 90) + "px";
-
+          (Math.random() * 180 - 90) + 'px';
 
 
 
         const midY =
-          -(Math.random() * 100 + 80) + "px";
-
+          -(Math.random() * 100 + 80) + 'px';
 
 
 
         const floorY =
-          (Math.random() * 100 + 180) + "px";
-
+          (Math.random() * 100 + 180) + 'px';
 
 
 
         const rx =
-          (Math.random() * 720 - 360) + "deg";
+          (Math.random() * 720 - 360) + 'deg';
 
         const ry =
-          (Math.random() * 720 - 360) + "deg";
+          (Math.random() * 720 - 360) + 'deg';
 
         const rz =
-          (Math.random() * 720 - 360) + "deg";
+          (Math.random() * 720 - 360) + 'deg';
 
 
         const rx2 =
-          (Math.random() * 720 - 360) + "deg";
+          (Math.random() * 720 - 360) + 'deg';
 
         const ry2 =
-          (Math.random() * 720 - 360) + "deg";
+          (Math.random() * 720 - 360) + 'deg';
 
         const rz2 =
-          (Math.random() * 720 - 360) + "deg";
+          (Math.random() * 720 - 360) + 'deg';
 
 
         const rx3 =
-          (Math.random() * 720 - 360) + "deg";
+          (Math.random() * 720 - 360) + 'deg';
 
         const ry3 =
-          (Math.random() * 720 - 360) + "deg";
+          (Math.random() * 720 - 360) + 'deg';
 
         const rz3 =
-          (Math.random() * 720 - 360) + "deg";
+          (Math.random() * 720 - 360) + 'deg';
 
 
+        coin.style.setProperty('--x', x);
+        coin.style.setProperty('--midY', midY);
+        coin.style.setProperty('--floorY', floorY);
 
+        coin.style.setProperty('--rx', rx);
+        coin.style.setProperty('--ry', ry);
+        coin.style.setProperty('--rz', rz);
 
+        coin.style.setProperty('--rx2', rx2);
+        coin.style.setProperty('--ry2', ry2);
+        coin.style.setProperty('--rz2', rz2);
 
-        coin.style.setProperty(
-          "--x",
-          x
-        );
-
-        coin.style.setProperty(
-          "--midY",
-          midY
-        );
-
-        coin.style.setProperty(
-          "--floorY",
-          floorY
-        );
-
-
-        coin.style.setProperty(
-          "--rx",
-          rx
-        );
-
-        coin.style.setProperty(
-          "--ry",
-          ry
-        );
-
-        coin.style.setProperty(
-          "--rz",
-          rz
-        );
-
-
-        coin.style.setProperty(
-          "--rx2",
-          rx2
-        );
-
-        coin.style.setProperty(
-          "--ry2",
-          ry2
-        );
-
-        coin.style.setProperty(
-          "--rz2",
-          rz2
-        );
-
-
-        coin.style.setProperty(
-          "--rx3",
-          rx3
-        );
-
-        coin.style.setProperty(
-          "--ry3",
-          ry3
-        );
-
-        coin.style.setProperty(
-          "--rz3",
-          rz3
-        );
-
+        coin.style.setProperty('--rx3', rx3);
+        coin.style.setProperty('--ry3', ry3);
+        coin.style.setProperty('--rz3', rz3);
 
 
 
         coin.style.animationDelay =
-          (Math.random() * 80) + "ms";
-
-
+          (Math.random() * 80) + 'ms';
 
 
         document.body.appendChild(coin);
 
 
 
-
         requestAnimationFrame(() => {
-          coin.classList.add("fly");
+          coin.classList.add('fly');
+        });
 
+
+
+        setTimeout(() => {
+          coin.remove();
+        }, 1100);
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
 
