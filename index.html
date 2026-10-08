@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple Clicker</title>
+  <title>Loris fun clicker game!</title>
   <style>
     body, html {
       height: 100%;
@@ -30,16 +30,34 @@
 
   <div class="container">
     <h1>Score: <span id="score">0</span></h1>
-    <button onclick="increaseScore()">Click me!</button>
+    <button onclick="increaseScore()">click me!</button>
   </div>
 
-  <script>
-    let score = 0;
-    function increaseScore() {
-      score++;
+  <button onclick="extraScore()">
+  +1 point-per-click (Cost: 5)
+</button>
+
+<script>
+  let score = 0;
+  let pointsPerClick = 1;
+  const upgradeCost = 5;
+
+  function increaseScore() {
+    score += pointsPerClick;
+    document.getElementById('score').textContent = score;
+  }
+
+  function extraScore() {
+    if (score >= upgradeCost) {
+      score -= upgradeCost;
+      pointsPerClick++;
       document.getElementById('score').textContent = score;
+      alert('Upgrade bought! You get +1 more point per click.');
+    } else {
+      alert('Not enough points to buy the upgrade.');
     }
-  </script>
+  }
+</script>
 
 </body>
 </html>
