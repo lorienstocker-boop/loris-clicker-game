@@ -159,7 +159,7 @@
     <br>
 
     <button id="moneyPrinterBtn" onclick="startMoneyPrinter()">
-      start GOOBY printer for 60 seconds
+      start GOOBY printer for 60 seconds (cost: 10000)
     </button>
 
     <div id="moneyPrinterDisplay" style="display: none; margin-top: 20px;">
@@ -196,15 +196,26 @@ let moneyPrinterCountdown = null;
 
 function startMoneyPrinter() {
   if (moneyPrinterActive) return;
+  
 
+  if (score < 10000) {
+    alert("you cannot start the GOOBY printer, you are broke!");
+    return;
+  }
+
+  
+  score -= 10000
+  document.getElementById('score').textContent = score;
+  
   moneyPrinterActive = true;
+
 
   const button = document.getElementById('moneyPrinterBtn');
   const display = document.getElementById('moneyPrinterDisplay');
   const timer = document.getElementById('moneyPrinterTimer');
 
   button.disabled = true;
-  button.textContent = '💸 GOOBY PRINTER RUNNING!';
+  button.textContent = 'GOOBY PRINTER RUNNING!';
   display.style.display = 'block';
 
   let secondsLeft = 60;
