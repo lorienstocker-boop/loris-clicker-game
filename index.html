@@ -156,6 +156,10 @@
       +50 point-per-click (cost: 100)
     </button>
 
+    <button id="upgradeBtn3" onclick="extraScoreX5()">
+      at this point your about to see some BIG numbers! (Cost: 50000)
+    </button>
+
   </div>
 
 
@@ -166,6 +170,7 @@
 
     let upgradeCost = 5;
     let upgradeCost2 = 100;
+    let upgradeCost3 = 50000;
 
 
     function increaseScore() {
@@ -227,7 +232,27 @@
 
     }
 
+    function extraScoreX5() {
+      if (score >= upgradeCost3) {
+        
+        score -= upgradeCost3;
 
+        pointsPerClick += 6500;
+
+        upgradeCost3 = Math.round(upgradeCost3 * 10);
+
+        document.getElementById('score').textContent = score;
+
+        document.getElementById('upgradeBtn2').textContent =
+          `at this point you are about to see some BIG numbers (cost: ${upgradeCost3})`;
+
+      } else {
+
+        alert('not enough points to buy the upgrade. :(');
+        
+      }
+      
+    }
 
     function createCoins() {
 
