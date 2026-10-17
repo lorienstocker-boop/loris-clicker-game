@@ -176,9 +176,11 @@
     <button id="upgradeBtn3" onclick="extraScoreX5()">
       BIG upgrade: +6500 points per click (cost: 50000)
     </button>
-
   </div>
 
+  <button id="upgradeBtn4" onclick="extraScoreLaLa()">
+      massive(low taper fade) upgrade (cost: 1000000)
+  </button>
 
   <script>
 
@@ -188,6 +190,7 @@
     let upgradeCost = 5;
     let upgradeCost2 = 100;
     let upgradeCost3 = 50000;
+    let upgradeCost4 = 1000000
 
 
 let moneyPrinterActive = false;
@@ -326,6 +329,23 @@ function startMoneyPrinter() {
 
     document.getElementById('upgradeBtn3').textContent =
       `BIG upgrade: +6500 points per click (cost: ${upgradeCost3})`;
+  } else {
+    alert('not enough points to buy the upgrade! :(');
+  }
+}
+
+    function extraScoreLaLa() {
+  if (score >= upgradeCost4) {
+    score -= upgradeCost4;
+
+    pointsPerClick += 100000;
+
+    upgradeCost3 = Math.round(upgradeCost3 * 7);
+
+    document.getElementById('score').textContent = score;
+
+    document.getElementById('upgradeBtn3').textContent =
+      `MASSIVE(low taper fade) upgrade (cost: ${upgradeCost4})`;
   } else {
     alert('not enough points to buy the upgrade! :(');
   }
