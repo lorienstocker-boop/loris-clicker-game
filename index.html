@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,54 +33,39 @@
       margin: 10px 5px 0 5px;
     }
 
-
     .coin {
       position: fixed;
       width: 24px;
       height: 24px;
       border-radius: 50%;
-
       background: linear-gradient(
         145deg,
         #fff36a,
         #ffd21c 45%,
         #d99b00
       );
-
       border: 2px solid #b77b00;
-
       box-shadow:
         inset 0 2px 2px rgba(255,255,255,0.7),
         0 3px 5px rgba(0,0,0,0.25);
-
       pointer-events: none;
-
       transform-style: preserve-3d;
-
       z-index: 1000;
     }
-
 
     .coin::after {
       content: "$";
       position: absolute;
-
       left: 50%;
       top: 50%;
-
       transform: translate(-50%, -50%);
-
       font-size: 14px;
       font-weight: bold;
       color: #9a6800;
-
-      text-shadow:
-        1px 1px rgba(255,255,255,0.4);
+      text-shadow: 1px 1px rgba(255,255,255,0.4);
     }
 
-
     @keyframes coinFly {
-
       0% {
         transform:
           translate3d(0, 0, 0)
@@ -88,7 +73,6 @@
           rotateY(0deg)
           rotateZ(0deg)
           scale(1);
-
         opacity: 1;
       }
 
@@ -112,7 +96,6 @@
           rotateY(var(--ry2))
           rotateZ(var(--rz2))
           scale(0.9);
-
         opacity: 1;
       }
 
@@ -123,7 +106,6 @@
           rotateY(var(--ry3))
           rotateZ(var(--rz3))
           scale(0.2);
-
         opacity: 0;
       }
     }
@@ -135,11 +117,9 @@
 </head>
 
 <body>
-
   <div class="container">
-
     <h1>
-      Score: <span id="score">0</span>
+      score: <span id="score">0</span>
     </h1>
 
     <button id="clickButton" onclick="increaseScore()">
@@ -163,316 +143,41 @@
     </button>
 
     <div id="moneyPrinterDisplay" style="display: none; margin-top: 20px;">
-  <img
-    src="money-printer.png"
-    alt="Money printer"
-    style="width: 250px; max-width: 100%; border-radius: 10px;"
-  >
+      <img
+        src="money-printer.png"
+        alt="Money printer"
+        style="width: 250px; max-width: 100%; border-radius: 10px;"
+      >
 
-  <h2 id="moneyPrinterTimer">60 seconds left!</h2>
-  <p>💰 +10,000 coins every second!</p>
-</div>
+      <h2 id="moneyPrinterTimer">60 seconds left!</h2>
+      <p>+10,000 coins every second!</p>
+    </div>
 
     <button id="upgradeBtn3" onclick="extraScoreX5()">
       BIG upgrade: +6500 points per click (cost: 50000)
     </button>
+
+    <button id="upgradeBtn4" onclick="extraScoreLaLa()">
+      massive(low taper fade) upgrade (cost: 1000000)
+    </button>
   </div>
 
-  <button id="upgradeBtn4" onclick="extraScoreLaLa()">
-      massive(low taper fade) upgrade (cost: 1000000)
-  </button>
-
   <script>
-
     let score = 0;
     let pointsPerClick = 1;
 
     let upgradeCost = 5;
     let upgradeCost2 = 100;
     let upgradeCost3 = 50000;
-    let upgradeCost4 = 1000000
+    let upgradeCost4 = 1000000;
 
+    let moneyPrinterActive = false;
+    let moneyPrinterInterval = null;
+    let moneyPrinterCountdown = null;
 
-let moneyPrinterActive = false;
-let moneyPrinterInterval = null;
-let moneyPrinterCountdown = null;
+    function startMoneyPrinter() {
+      if (moneyPrinterActive) return;
 
-function startMoneyPrinter() {
-  if (moneyPrinterActive) return;
-  
-
-  if (score < 10000) {
-    alert("you cannot start the GOOBY printer, you are broke!");
-    return;
-  }
-
-  
-  score -= 10000
-  document.getElementById('score').textContent = score;
-  
-  moneyPrinterActive = true;
-
-
-  const button = document.getElementById('moneyPrinterBtn');
-  const display = document.getElementById('moneyPrinterDisplay');
-  const timer = document.getElementById('moneyPrinterTimer');
-
-  button.disabled = true;
-  button.textContent = 'GOOBY PRINTER RUNNING!';
-  display.style.display = 'block';
-
-  let secondsLeft = 60;
-
-  timer.textContent = secondsLeft + ' seconds left!';
-
-
-  moneyPrinterInterval = setInterval(() => {
-    score += 10000;
-
-    document.getElementById('score').textContent = score;
-  }, 1000);
-
-
-  moneyPrinterCountdown = setInterval(() => {
-    secondsLeft--;
-
-    timer.textContent = secondsLeft + ' seconds left!';
-
-    if (secondsLeft <= 0) {
-      clearInterval(moneyPrinterInterval);
-      clearInterval(moneyPrinterCountdown);
-
-      moneyPrinterInterval = null;
-      moneyPrinterCountdown = null;
-      moneyPrinterActive = false;
-
-      display.style.display = 'none';
-
-      button.disabled = false;
-      button.textContent = 'start GOOBY printer for 60 seconds';
-    }
-  }, 1000);
-}
-
-
-
-
-    function increaseScore() {
-
-      score += pointsPerClick;
-
-      document.getElementById('score').textContent = score;
-
-
-      createCoins();
-
-    }
-
-
-    function extraScore() {
-
-      if (score >= upgradeCost) {
-
-        score -= upgradeCost;
-
-        pointsPerClick += 1;
-
-        upgradeCost = Math.round(upgradeCost * 1.5);
-
-        document.getElementById('score').textContent = score;
-
-        document.getElementById('upgradeBtn').textContent =
-          `+1 point-per-click (cost: ${upgradeCost})`;
-
-      } else {
-
-        alert('not enough points to buy the upgrade. :(');
-
-      }
-
-    }
-
-
-    function extraScoreX2() {
-
-      if (score >= upgradeCost2) {
-
-        score -= upgradeCost2;
-
-        pointsPerClick += 50;
-
-        upgradeCost2 = Math.round(upgradeCost2 * 1.5);
-
-        document.getElementById('score').textContent = score;
-
-        document.getElementById('upgradeBtn2').textContent =
-          `+50 point-per-click (cost: ${upgradeCost2})`;
-
-      } else {
-
-        alert('not enough points to buy the upgrade. :(');
-
-      }
-
-    }
-
-
-    function extraScoreX5() {
-  if (score >= upgradeCost3) {
-    score -= upgradeCost3;
-
-    pointsPerClick += 6500;
-
-    upgradeCost3 = Math.round(upgradeCost3 * 10);
-
-    document.getElementById('score').textContent = score;
-
-    document.getElementById('upgradeBtn3').textContent =
-      `BIG upgrade: +6500 points per click (cost: ${upgradeCost3})`;
-  } else {
-    alert('not enough points to buy the upgrade! :(');
-  }
-}
-
-    function extraScoreLaLa() {
-  if (score >= upgradeCost4) {
-    score -= upgradeCost4;
-
-    pointsPerClick += 100000;
-
-    upgradeCost3 = Math.round(upgradeCost3 * 7);
-
-    document.getElementById('score').textContent = score;
-
-    document.getElementById('upgradeBtn3').textContent =
-      `MASSIVE(low taper fade) upgrade (cost: ${upgradeCost4})`;
-  } else {
-    alert('not enough points to buy the upgrade! :(');
-  }
-}
-
-
-
-    function createCoins() {
-
-      const button =
-        document.getElementById('clickButton');
-
-      const rect =
-        button.getBoundingClientRect();
-
-
-      for (let i = 0; i < 5; i++) {
-
-        const coin =
-          document.createElement('div');
-
-        coin.className = 'coin';
-
-
-
-        const startX =
-          rect.left +
-          rect.width / 2 -
-          12;
-
-        const startY =
-          rect.top +
-          rect.height / 2 -
-          12;
-
-
-        coin.style.left = startX + 'px';
-        coin.style.top = startY + 'px';
-
-
-        const x =
-          (Math.random() * 180 - 90) + 'px';
-
-
-
-        const midY =
-          -(Math.random() * 100 + 80) + 'px';
-
-
-
-        const floorY =
-          (Math.random() * 100 + 180) + 'px';
-
-
-
-        const rx =
-          (Math.random() * 720 - 360) + 'deg';
-
-        const ry =
-          (Math.random() * 720 - 360) + 'deg';
-
-        const rz =
-          (Math.random() * 720 - 360) + 'deg';
-
-
-        const rx2 =
-          (Math.random() * 720 - 360) + 'deg';
-
-        const ry2 =
-          (Math.random() * 720 - 360) + 'deg';
-
-        const rz2 =
-          (Math.random() * 720 - 360) + 'deg';
-
-
-        const rx3 =
-          (Math.random() * 720 - 360) + 'deg';
-
-        const ry3 =
-          (Math.random() * 720 - 360) + 'deg';
-
-        const rz3 =
-          (Math.random() * 720 - 360) + 'deg';
-
-
-        coin.style.setProperty('--x', x);
-        coin.style.setProperty('--midY', midY);
-        coin.style.setProperty('--floorY', floorY);
-
-        coin.style.setProperty('--rx', rx);
-        coin.style.setProperty('--ry', ry);
-        coin.style.setProperty('--rz', rz);
-
-        coin.style.setProperty('--rx2', rx2);
-        coin.style.setProperty('--ry2', ry2);
-        coin.style.setProperty('--rz2', rz2);
-
-        coin.style.setProperty('--rx3', rx3);
-        coin.style.setProperty('--ry3', ry3);
-        coin.style.setProperty('--rz3', rz3);
-
-
-
-        coin.style.animationDelay =
-          (Math.random() * 80) + 'ms';
-
-
-        document.body.appendChild(coin);
-
-
-
-        requestAnimationFrame(() => {
-          coin.classList.add('fly');
-        });
-
-
-
-        setTimeout(() => {
-          coin.remove();
-        }, 1100);
-
-      }
-
-    }
-
-  </script>
-
-</body>
-</html>
-
+      if (score < 10000) {
+        alert("you cannot start the GOOBY printer, you are broke!");
+       
